@@ -36,8 +36,6 @@ public class Player_Controller : MonoBehaviour
             isGrounded = false;
         }
 
-        // Rotate the player to look at the mouse
-        LookatMouse();
     }
 
     // Stop the player from double jumping
@@ -46,20 +44,6 @@ public class Player_Controller : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-        }
-    }
-
-    // Rotate the player to look at the mouse
-    void LookatMouse()
-    {
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        float rayLength;
-
-        if (groundPlane.Raycast(cameraRay, out rayLength))
-        {
-            Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
     }
 }
