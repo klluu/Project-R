@@ -5,35 +5,30 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
-    public float speed = 10.0f;
-    public bool isGrounded = true;
-    public float jumpForce = 4.0f;
-    private float horizontalInput;
-    private float verticalInput;
-    private Rigidbody playerRb;
+    [SerializeField] private float _speed = 10.0f;
+    [SerializeField] private bool _isGrounded = true;
+    [SerializeField] private float _jumpForce = 300.0f;
+    [SerializeField] private Rigidbody _rb;
         
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Get the player input
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-
         // Move the player
-        Vector3 movement = new Vector3(horizontalInput, 0, verticalInput);
-        transform.Translate(movement * Time.deltaTime * speed);
+        var movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * _speed;
+        movement.y = _rb.velocity.y;
+        _rb.velocity = movement;
 
         // Jump function
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
+            _rb.AddForce(Vector3.up * _jumpForce);
+            _isGrounded = false;
         }
 
     }
@@ -43,7 +38,7 @@ public class Player_Controller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            _isGrounded = true;
         }
     }
 }
