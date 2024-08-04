@@ -7,7 +7,9 @@ using UnityEngine;
 public class Enemy_AI : MonoBehaviour
 {
     [Header("Speed")]
-    [SerializeField] private float speed = 2f;
+    public float maxSpeed;
+    private float speed;
+
 
     private Collider[] hitColliders;
     private RaycastHit Hit;
@@ -26,11 +28,18 @@ public class Enemy_AI : MonoBehaviour
     [SerializeField] private float groundRadius;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private bool isGrounded;
+
+    [Header("Damage")]
+    [SerializeField] private float damage;
+    [SerializeField] private float delayTime;
+
+    private bool canAttack = true;
+
     
 
     void Start()
     {
-    
+        speed = maxSpeed;
     }
 
     void Update()
@@ -74,8 +83,28 @@ public class Enemy_AI : MonoBehaviour
                     }
                 }
             }
-        }
+        }   
+    }
 
-        
+
+    //Use Player_Health takeDamage function to send damage from enemy
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Player")
+        {
+            collision.collider.gameObject.GetComponent<Player_Health>().takeDamage(damage);
+            StartCoroutine(AttackDelay(delayTime));
+        }
+    }
+
+
+    //adds delay to enemy attack
+    public IEnumerator AttackDelay(float delay)
+    {
+        speed = 0;
+        canAttack = false;
+        yield return new WaitForSeconds(delay);
+        speed = maxSpeed;
+        canAttack = true;
     }
 }
