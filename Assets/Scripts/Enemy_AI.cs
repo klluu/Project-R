@@ -95,6 +95,10 @@ public class Enemy_AI : MonoBehaviour
             collision.collider.gameObject.GetComponent<Player_Health>().takeDamage(damage);
             StartCoroutine(AttackDelay(delayTime));
         }
+        if(collision.collider.tag == "PlayerProjectile")
+        {
+            gameObject.GetComponent<Enemy_Health>().takeDamage(damage);
+        }
     }
 
 
