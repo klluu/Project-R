@@ -33,7 +33,7 @@ public class Enemy_AI : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float delayTime;
 
-    private bool canAttack = true;
+    //private bool canAttack = true;
 
     
 
@@ -106,9 +106,9 @@ public class Enemy_AI : MonoBehaviour
     public IEnumerator AttackDelay(float delay)
     {
         speed = 0;
-        canAttack = false;
+        //canAttack = false;
         yield return new WaitForSeconds(delay);
         speed = maxSpeed;
-        canAttack = true;
+        //canAttack = true;
     }
 }
