@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Floating_Healthbar : MonoBehaviour
+public class Floating_Healthbar_EaseIn : MonoBehaviour
 {
     public Slider healthbarSlider;
     public Slider easeHealthbarSlider;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float health;
+    private float maxHealth;
+    private float health;
     public float lerpSpeed = 0.01f;
     private Player_Health playerHealth;
     private float previousHealth;
@@ -39,7 +39,11 @@ public class Floating_Healthbar : MonoBehaviour
             Debug.LogError("EaseHealthbarSlider is not assigned.");
         }
     }
-
+    // Exponential interpolation function with super slow start and quick acceleration
+    float ExponentialEaseIn(float start, float end, float t)
+    {
+        return start + (end - start) * Mathf.Pow(t, 3);
+    }
     void Update()
     {
         if (health != playerHealth.currentHealth)
@@ -58,7 +62,7 @@ public class Floating_Healthbar : MonoBehaviour
         float healthChange = Mathf.Abs(health - previousHealth);
 
         // Adjust lerpSpeed based on the magnitude of the health change
-        lerpSpeed = Mathf.Clamp(0.1f / (healthChange + 1), 0.001f, 0.1f);
+        lerpSpeed = Mathf.Clamp(0.2f / (healthChange + 1), 0.01f, 0.2f);
 
         if (healthbarSlider != null && healthbarSlider.value != health)
         {
@@ -67,8 +71,7 @@ public class Floating_Healthbar : MonoBehaviour
 
         if (healthbarSlider != null && easeHealthbarSlider != null && healthbarSlider.value != easeHealthbarSlider.value)
         {
-            easeHealthbarSlider.value = Mathf.Lerp(easeHealthbarSlider.value, health, lerpSpeed);
+            easeHealthbarSlider.value = ExponentialEaseIn(easeHealthbarSlider.value, health, lerpSpeed);
         }
-
     }
 }
