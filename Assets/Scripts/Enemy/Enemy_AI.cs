@@ -92,7 +92,7 @@ public class Enemy_AI : MonoBehaviour
     {
         if(collision.collider.tag == "Player")
         {
-            collision.collider.gameObject.GetComponent<Player_Health>().takeDamage(damage);
+            collision.collider.gameObject.GetComponent<Player_Stats>().takeDamage(damage);
             StartCoroutine(AttackDelay(delayTime));
         }
         if(collision.collider.tag == "PlayerProjectile")
