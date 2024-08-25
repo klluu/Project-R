@@ -1,27 +1,29 @@
+//Derek
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Floating_Healthbar : MonoBehaviour
+public class Floating_Healthbar_Event : MonoBehaviour
 {
     public Slider healthbarSlider;
     public Slider easeHealthbarSlider;
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
     public float lerpSpeed = 0.01f;
-    private Player_Stats playerStats;
+    private Player_Health playerHealth;
     private float previousHealth;
 
     void Start()
     {
         // Get the Player_Health component from the parent object
-        playerStats = GetComponentInParent<Player_Stats>();
+        playerHealth = GetComponentInParent<Player_Health>();
         // Set maxHealth to the maxHealth value from the Player_Health script
-        if (playerStats != null)
+        if (playerHealth != null)
         {
-            maxHealth = playerStats.maxHealth;
-            health = playerStats.currentHealth;
+            maxHealth = playerHealth.maxHealth;
+            health = playerHealth.currentHealth;
             previousHealth = health; // Initialize previousHealth
         }
         else
@@ -42,16 +44,16 @@ public class Floating_Healthbar : MonoBehaviour
 
     void Update()
     {
-        if (health != playerStats.currentHealth)
+        if (health != playerHealth.currentHealth)
         {
             // Update previousHealth to the current health
             previousHealth = health;
-            health = playerStats.currentHealth;
+            health = playerHealth.currentHealth;
         }
 
-        if (maxHealth != playerStats.maxHealth)
+        if (maxHealth != playerHealth.maxHealth)
         {
-            maxHealth = playerStats.maxHealth;
+            maxHealth = playerHealth.maxHealth;
         }
 
         // Calculate the difference in health

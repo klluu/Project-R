@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  despawnDistance: 20
 --- !u!1 &1497605858535913007
 GameObject:
   m_ObjectHideFlags: 0
