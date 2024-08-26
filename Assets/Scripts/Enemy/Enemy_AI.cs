@@ -20,6 +20,8 @@ public class Enemy_AI : MonoBehaviour
 
     public Rigidbody rb;
     public GameObject Target;
+    private bool isCollidingWithPlayer = false;
+
 
     private bool seePlayer;
 
@@ -31,7 +33,7 @@ public class Enemy_AI : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private float damage;
-    [SerializeField] private float delayTime;
+    [SerializeField] private float delayTime = 1f;
 
     //private bool canAttack = true;
 
@@ -87,28 +89,38 @@ public class Enemy_AI : MonoBehaviour
     }
 
 
-    //Use Player_Health takeDamage function to send damage from enemy
+    //Use Player_Stats takeDamage function to send damage from enemy
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Player")
+        if (collision.collider.tag == "Player")
         {
-            collision.collider.gameObject.GetComponent<Player_Stats>().takeDamage(damage);
-            StartCoroutine(AttackDelay(delayTime));
+            if (!isCollidingWithPlayer)
+            {
+                isCollidingWithPlayer = true;
+                StartCoroutine(DamagePlayerOverTime(collision.collider.gameObject.GetComponent<Player_Stats>()));
+            }
         }
-        if(collision.collider.tag == "PlayerProjectile")
+        if (collision.collider.tag == "PlayerProjectile")
         {
             gameObject.GetComponent<Enemy_Health>().takeDamage(damage);
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.tag == "Player")
+        {
+            isCollidingWithPlayer = false;
+        }
+    }
 
     //adds delay to enemy attack
-    public IEnumerator AttackDelay(float delay)
+       private IEnumerator DamagePlayerOverTime(Player_Stats playerStats)
     {
-        speed = 0;
-        //canAttack = false;
-        yield return new WaitForSeconds(delay);
-        speed = maxSpeed;
-        //canAttack = true;
+        while (isCollidingWithPlayer)
+        {
+            playerStats.takeDamage(damage);
+            yield return new WaitForSeconds(delayTime);
+        }
     }
 }
