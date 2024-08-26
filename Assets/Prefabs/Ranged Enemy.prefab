@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 6441447225941993397}
   - component: {fileID: 2707487019982496043}
   - component: {fileID: 7787222421470996810}
-  - component: {fileID: 980012462447294565}
+  - component: {fileID: -4226594410175631744}
   - component: {fileID: 534468316963906632}
   m_Layer: 0
-  m_Name: Enemy Red
+  m_Name: Ranged Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3037751922086036910}
+  - {fileID: 5580322934137953151}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1212347278315076202
@@ -138,7 +139,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &980012462447294565
+--- !u!114 &-4226594410175631744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,22 +148,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 484950447863091628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785a69ab5518af943beaad20f5bc509a, type: 3}
+  m_Script: {fileID: 11500000, guid: 49205810f6d3e0844abec77fb819345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 2
-  SightRange: 20
+  maxSpeed: 1
+  SightRange: 10
   DetectionRange: 20
   rb: {fileID: 7787222421470996810}
   Target: {fileID: 0}
-  groundCheck: {fileID: 3037751922086036910}
-  groundRadius: 0.1
+  groundCheck: {fileID: 0}
+  groundRadius: 0
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   isGrounded: 0
-  damage: 20
-  delayTime: 0.5
+  damage: 10
+  delayTime: 1
+  projectilePrefab: {fileID: 7613358673960273071, guid: 9a549e431707c814bafb1999934203ac, type: 3}
+  firePoint: {fileID: 5580322934137953151}
+  projectileSpeed: 10
+  fireRate: 1
 --- !u!114 &534468316963906632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +183,37 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   despawnDistance: 20
+--- !u!1 &744656944714016325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5580322934137953151}
+  m_Layer: 0
+  m_Name: Front
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5580322934137953151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744656944714016325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1728626487640629398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1497605858535913007
 GameObject:
   m_ObjectHideFlags: 0
