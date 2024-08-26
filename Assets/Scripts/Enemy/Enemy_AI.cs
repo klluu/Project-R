@@ -22,6 +22,9 @@ public class Enemy_AI : MonoBehaviour
     public GameObject Target;
 
     private bool seePlayer;
+    private bool isCollidingWithPlayer = false;
+    public float deltaTime = 1f;
+
 
     [Header("Ground Detection")]
     [SerializeField] private Transform groundCheck;
@@ -87,7 +90,7 @@ public class Enemy_AI : MonoBehaviour
     }
 
 
-    //Use Player_Health takeDamage function to send damage from enemy
+    //Use Player_Stats takeDamage function to send damage from enemy
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.collider.tag == "Player")
@@ -100,15 +103,20 @@ public class Enemy_AI : MonoBehaviour
             gameObject.GetComponent<Enemy_Health>().takeDamage(damage);
         }
     }
-
-
-    //adds delay to enemy attack
-    public IEnumerator AttackDelay(float delay)
+    private void OnCollisionExit(Collision collision)
     {
-        speed = 0;
-        //canAttack = false;
-        yield return new WaitForSeconds(delay);
-        speed = maxSpeed;
-        //canAttack = true;
+        if (collision.collider.tag == "Player")
+        {
+            isCollidingWithPlayer = false;
+        }
     }
-}
+    
+    //adds delay to enemy attack
+    private IEnumerator DamagePlayerOverTime(Player_Stats playerHealth)
+    {
+        while (isCollidingWithPlayer)
+        {
+            playerHealth.takeDamage(damage);
+            yield return new WaitForSeconds(1f);
+        }
+    }
