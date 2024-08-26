@@ -156,11 +156,11 @@ MonoBehaviour:
   DetectionRange: 20
   rb: {fileID: 7787222421470996810}
   Target: {fileID: 0}
-  groundCheck: {fileID: 0}
-  groundRadius: 0
+  groundCheck: {fileID: 3037751922086036910}
+  groundRadius: 0.1
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   isGrounded: 0
   damage: 10
   delayTime: 1
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb3f8c6de23a60f4ca3597fa34d1e078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 60
   currentHealth: 0
   despawnDistance: 20
 --- !u!1 &744656944714016325

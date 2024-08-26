@@ -100,10 +100,6 @@ public class Enemy_AI : MonoBehaviour
                 StartCoroutine(DamagePlayerOverTime(collision.collider.gameObject.GetComponent<Player_Stats>()));
             }
         }
-        if (collision.collider.tag == "PlayerProjectile")
-        {
-            gameObject.GetComponent<Enemy_Health>().takeDamage(damage);
-        }
     }
 
     private void OnCollisionExit(Collision collision)

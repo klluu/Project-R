@@ -28,7 +28,7 @@ public class RangedEnemy_AI : MonoBehaviour
     [SerializeField] private bool isGrounded;
 
     [Header("Damage")]
-    [SerializeField] private float damage;
+    [SerializeField] private float damage; // acting as player projectile **not right**
     [SerializeField] private float delayTime = 1f;
 
     [Header("Projectile")]
@@ -88,10 +88,6 @@ public class RangedEnemy_AI : MonoBehaviour
                 isCollidingWithPlayer = true;
                 StartCoroutine(DamagePlayerOverTime(collision.collider.gameObject.GetComponent<Player_Stats>()));
             }
-        }
-        if (collision.collider.tag == "PlayerProjectile")
-        {
-            gameObject.GetComponent<Enemy_Health>().takeDamage(damage);
         }
     }
 
